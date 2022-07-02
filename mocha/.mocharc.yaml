@@ -1,0 +1,9 @@
+spec: tests/**/*.test.js
+recursive: true
+reporter: mocha-multi-reporters
+reporter-option:
+  - configFile=mocha/mocha-config.json
+exit: true
+timeout: 20000
+parallel: true
+jobs: 4

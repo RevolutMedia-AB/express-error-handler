@@ -1,0 +1,33 @@
+{
+  "name": "express-error-handler",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RevolutMedia-AB/express-error-handler.git"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "scripts": {
+    "test": "mocha --config ./mocha/.mocharc.yaml",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "express": "^4.18.1",
+    "husky": "^8.0.1",
+    "lint-staged": ">=10",
+    "mocha": "^9.1.3",
+    "mocha-multi-reporters": "^1.5.1",
+    "mochawesome": "^6.3.1",
+    "prettier": "^2.4.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
+}
