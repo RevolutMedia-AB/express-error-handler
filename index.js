@@ -37,7 +37,7 @@ module.exports = function (logger = DEFAULT_LOGGER) {
     _logger.debug(`Got error on ${req.method} ${req.url}`);
     const error = req?.error;
     const message =
-      req?.error?.message || req?.error?.toString() || req?.message || 'Internal Server Error';
+      req?.error?.message || req?.error?.msg || req?.message || 'Internal Server Error';
 
     if (typeof error === 'undefined') {
       //We have no error set on the request object, weird, I guess we just respond with a generic 500 error
@@ -56,7 +56,7 @@ module.exports = function (logger = DEFAULT_LOGGER) {
       return;
     }
 
-    _logger.debug(`Responding with ${error.status} ${message}`);
+    _logger.debug(`Responding with ${error.status}: ${message}`);
     res.status(error.status).send(message);
   };
 };
