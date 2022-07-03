@@ -43,7 +43,7 @@ module.exports = function (logger = DEFAULT_LOGGER) {
       //We have no error set on the request object, weird, I guess we just respond with a generic 500 error
       _logger.warn(`No error set on request object, responding with 500`);
       _logger.debug(`Req message: ${req?.message || req?.toString()}`);
-      res.status(500).send(message);
+      res.status(500).json({error: message});
       return;
     }
 
@@ -52,11 +52,11 @@ module.exports = function (logger = DEFAULT_LOGGER) {
       _logger.debug(`Error message: ${message}`);
       // We might want to always send 'Internal Server Error' here for safety
       // since we don't know where the error came from
-      res.status(500).send(message);
+      res.status(500).json({error: message});
       return;
     }
 
     _logger.debug(`Responding with ${error.status}: ${message}`);
-    res.status(error.status).send(message);
+    res.status(error.status).json({error: message});
   };
 };

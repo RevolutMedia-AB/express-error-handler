@@ -11,9 +11,9 @@ const mockExpressResponse = (expectedStatus, expectedMessage) => {
   return {
     status: function (statusCode) {
       return {
-        send: function (message) {
+        json: function (message) {
           expect(statusCode).to.equal(expectedStatus);
-          expect(message).to.equal(expectedMessage);
+          expect(message).to.deep.equal({error: expectedMessage});
         },
       };
     },

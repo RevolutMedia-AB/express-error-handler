@@ -26,7 +26,8 @@
     "mocha-multi-reporters": "^1.5.1",
     "mochawesome": "^6.3.1",
     "prettier": "^2.4.0",
-    "sinon": "^14.0.0"
+    "sinon": "^14.0.0",
+    "superagent": "^8.0.0"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
