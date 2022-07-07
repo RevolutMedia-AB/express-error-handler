@@ -1,23 +1,4 @@
-# ExpressJS Error Handler
-A ExpressJS handler that handles errors and responds with a JSON error object.
-
-## Usage
-This module is made to work as the last handler in an express route, expecting the property `error` to be set on the Express `req` object.
-
-This means that all previous handlers can simple create a new `Error` object like so
-```javascript
-const error = new Error('Not found');
-error.status = 404;
-req.error = error;
-```
-And then simple call `next()`
-
-Setting `req.error` to an actual `Error` object is optional, as is setting the `status` property.
-If `status` is missing the handler will respond with a `500` code. If no message is set it will fallback to a generic `Internal Server Error`.
-
-### Example usage in router handler
-
-```javascript
+'use strict';
 const express = require('express');
 const errorHandler = require('./index');
 const app = express();
@@ -64,7 +45,8 @@ app.use(router);
 // Catch any route not registered and use the error handler's fallback error to make it respond with 404 instead of 500
 const notFoundErrorHandler = errorHandler(undefined, {message: 'Not Found!', status: 404});
 app.get('*', notFoundErrorHandler);
-```
 
-You can run this locally using `node example.js`
-
+app.listen(3000, () => {
+  // eslint-disable-next-line no-console
+  console.log(`Server listening on 3000`);
+});

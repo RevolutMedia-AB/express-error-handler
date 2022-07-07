@@ -14,17 +14,21 @@ const DEFAULT_LOGGER = {
   warn: console.warn,
   error: console.error,
 };
+const DEFAULT_ERROR = {message: 'Internal Server Error', status: 500};
 
 const VALID_HTTP_STATUS_CODES = Object.keys(http.STATUS_CODES).map((status) => {
   return parseInt(status, 10);
 });
 
+const UNWANTED_MESSAGES = ['[object Object]', 'undefined', 'Error'];
+
 /**
  *
  * @param logger {{debug: function, info: function, warn: function, error: function}}
+ * @param fallbackError {{message: string, status: number}}
  * @returns {(function(e.Request, e.Response))}
  */
-module.exports = function (logger = DEFAULT_LOGGER) {
+module.exports = function (logger = DEFAULT_LOGGER, fallbackError = DEFAULT_ERROR) {
   const _logName = '@ExpressErrorHandler';
   const _logger = {
     debug: (msg, ...args) => logger.debug(`${_logName}: ${msg}`, ...args),
@@ -36,14 +40,16 @@ module.exports = function (logger = DEFAULT_LOGGER) {
   return function (req, res) {
     _logger.debug(`Got error on ${req.method} ${req.url}`);
     const error = req?.error;
-    const message =
-      req?.error?.message || req?.error?.msg || req?.message || 'Internal Server Error';
+    let message = req?.error?.message || req?.error?.msg || req?.message || req?.error?.toString();
+    if (typeof message === 'undefined' || UNWANTED_MESSAGES.includes(message)) {
+      message = fallbackError.message;
+    }
 
     if (typeof error === 'undefined') {
-      //We have no error set on the request object, weird, I guess we just respond with a generic 500 error
-      _logger.warn(`No error set on request object, responding with 500`);
+      //We have no error set on the request object, we will respond with the fallback error
+      _logger.warn(`No error set on request object, responding with ${fallbackError.status}`);
       _logger.debug(`Req message: ${req?.message || req?.toString()}`);
-      res.status(500).json({error: message});
+      res.status(fallbackError.status).json({error: message});
       return;
     }
 

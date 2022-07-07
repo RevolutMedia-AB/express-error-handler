@@ -31,11 +31,10 @@ describe('given a Request and Response object', function () {
 
   context('when req.error is set to an error on the expected format', function () {
     it('should be respond with the error status and message provided', function () {
+      const error = new Error('I really like tea');
+      error.status = 418;
       const req = {
-        error: {
-          message: 'I really like tea',
-          status: 418,
-        },
+        error: error,
       };
       const res = mockExpressResponse(418, 'I really like tea');
       errorHandler()(req, res);
@@ -85,6 +84,17 @@ describe('given a logger', function () {
         error: mockedFallbackLogger,
       };
       errorHandler(mockedLogger)(req, res);
+    });
+  });
+});
+
+describe('given a fallback error', function () {
+  context('when called with no error object set', function () {
+    it('should respond with the fallback message and status', function () {
+      const fallbackError = {message: 'I really like tea', status: 418};
+      const req = {};
+      const res = mockExpressResponse(418, 'I really like tea');
+      errorHandler(undefined, fallbackError)(req, res);
     });
   });
 });
