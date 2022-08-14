@@ -5,9 +5,6 @@
     "type": "git",
     "url": "https://github.com/RevolutMedia-AB/express-error-handler.git"
   },
-  "engines": {
-    "node": "16"
-  },
   "scripts": {
     "test": "mocha --config ./mocha/.mocharc.yaml",
     "prepare": "husky install"
