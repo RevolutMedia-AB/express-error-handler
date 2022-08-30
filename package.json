@@ -6,8 +6,7 @@
     "url": "https://github.com/RevolutMedia-AB/express-error-handler.git"
   },
   "scripts": {
-    "test": "mocha --config ./mocha/.mocharc.yaml",
-    "prepare": "husky install"
+    "test": "mocha --config ./mocha/.mocharc.yaml"
   },
   "devDependencies": {
     "chai": "^4.3.4",
